@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require 'all_images'
+
+exit AllImages::App.new(ARGV).run
