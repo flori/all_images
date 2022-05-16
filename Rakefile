@@ -16,7 +16,6 @@ GemHadar do
   title       "#{name.camelize} -- #{summary}"
   package_ignore '.all_images.yml', '.gitignore', 'VERSION'
 
-  required_ruby_version '>= 2.5'
   dependency  'tins', '~>1.0'
   dependency  'term-ansicolor'
   development_dependency 'rake'
