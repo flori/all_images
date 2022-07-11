@@ -2,7 +2,7 @@ require 'yaml'
 
 module AllImages::Config
   def load(filename)
-    YAML.load_file(filename)
+    YAML.unsafe_load_file(filename)
   end
 
   EXAMPLE = <<~end
