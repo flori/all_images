@@ -23,7 +23,11 @@ class AllImages::App
         puts green('SUCCESS')
       else
         puts red('FAILURE')
-        result |= 1
+        if @config['fail_fast']
+          return 1
+        else
+          result |= 1
+        end
       end
     ensure
       sh 'docker rm -f all_images >/dev/null'
