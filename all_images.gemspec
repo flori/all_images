@@ -30,6 +30,7 @@ Gem::Specification.new do |s|
     s.add_development_dependency(%q<rake>.freeze, [">= 0"])
     s.add_development_dependency(%q<simplecov>.freeze, [">= 0"])
     s.add_development_dependency(%q<rspec>.freeze, [">= 0"])
+    s.add_development_dependency(%q<debug>.freeze, [">= 0"])
     s.add_runtime_dependency(%q<tins>.freeze, ["~> 1.0"])
     s.add_runtime_dependency(%q<term-ansicolor>.freeze, [">= 0"])
   else
@@ -37,6 +38,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<rake>.freeze, [">= 0"])
     s.add_dependency(%q<simplecov>.freeze, [">= 0"])
     s.add_dependency(%q<rspec>.freeze, [">= 0"])
+    s.add_dependency(%q<debug>.freeze, [">= 0"])
     s.add_dependency(%q<tins>.freeze, ["~> 1.0"])
     s.add_dependency(%q<term-ansicolor>.freeze, [">= 0"])
   end
