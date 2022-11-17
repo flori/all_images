@@ -21,7 +21,6 @@ GemHadar do
   development_dependency 'rake'
   development_dependency 'simplecov'
   development_dependency 'rspec'
-  development_dependency 'debug'
   licenses << 'MIT'
   executables << 'all_images'
 end
