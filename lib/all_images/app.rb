@@ -10,32 +10,67 @@ class AllImages::App
 
   def initialize(args)
     @args = args.dup
+    @command = determine_command
   end
 
   def run
     result     = 0
     @config    = load_config or return 23
-    dockerfile = @config.fetch('dockerfile').to_s
 
-    Array(@config['images']).each do |image, script|
-      tag = provide_image image, dockerfile
-      if sh "docker run --name all_images -v `pwd`:/work '#{tag}' sh -c '#{script}'"
-        puts green('SUCCESS')
-      else
-        puts red('FAILURE')
-        if @config['fail_fast']
-          return 1
-        else
-          result |= 1
+    if @command == 'ls'
+      puts Array(@config['images']).map(&:first)
+    else
+      Array(@config['images']).each do |image, script|
+        case @command
+        when 'run_all'
+          run_image(image, script)
+        when 'run_selected'
+          image == @selected and run_image(image, script)
+        when 'debug_selected'
+          image == @selected and run_image(image, script, interactive: true)
         end
       end
-    ensure
-      sh 'docker rm -f all_images >/dev/null'
     end
     result
   end
 
   private
+
+  def run_image(image, script, interactive: false)
+    dockerfile = @config.fetch('dockerfile').to_s
+    tag = provide_image image, dockerfile
+    it = interactive ? ' -it ' : ' '
+    if sh "docker run --name all_images#{it}-v `pwd`:/work '#{tag}' sh -c '#{script}'"
+      puts green('SUCCESS')
+    else
+      puts red('FAILURE')
+      if @config['fail_fast']
+        return 1
+      else
+        result |= 1
+      end
+    end
+  ensure
+    sh 'docker rm -f all_images >/dev/null'
+  end
+
+  def determine_command
+    case command = @args.first
+    when nil
+      'run_all'
+    when 'ls'
+      @args.shift
+      'ls'
+    when 'run'
+      @args.shift
+      @selected = @args.shift or fail "Usage: #{File.basename($0)} #{command} IMAGE"
+      'run_selected'
+    when 'debug'
+      @args.shift
+      @selected = @args.shift or fail "Usage: #{File.basename($0)} #{command} IMAGE"
+      'debug_selected'
+    end
+  end
 
   def load_config
     config_filename = '.all_images.yml'

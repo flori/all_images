@@ -1,9 +1,9 @@
 # -*- encoding: utf-8 -*-
-# stub: all_images 0.1.0 ruby lib
+# stub: all_images 0.2.0 ruby lib
 
 Gem::Specification.new do |s|
   s.name = "all_images".freeze
-  s.version = "0.1.0"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0".freeze) if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib".freeze]
