@@ -10,15 +10,19 @@ class AllImages::App
 
   def initialize(args)
     @args = args.dup
-    @command = determine_command
+    @command = pick_command
   end
 
   def run
     result     = 0
     @config    = load_config or return 23
 
-    if @command == 'ls'
+    case @command
+    when 'ls'
       puts Array(@config['images']).map(&:first)
+    when 'help'
+      commands = %w[ ls help run debug run_all ].sort
+      puts "Usage: #{File.basename($0)} #{commands * ?|} IMAGE"
     else
       Array(@config['images']).each do |image, script|
         case @command
@@ -54,21 +58,20 @@ class AllImages::App
     sh 'docker rm -f all_images >/dev/null'
   end
 
-  def determine_command
-    case command = @args.first
-    when nil
+  def pick_command
+    case command = @args.shift
+    when 'run_all', nil
       'run_all'
     when 'ls'
-      @args.shift
       'ls'
     when 'run'
-      @args.shift
       @selected = @args.shift or fail "Usage: #{File.basename($0)} #{command} IMAGE"
       'run_selected'
     when 'debug'
-      @args.shift
       @selected = @args.shift or fail "Usage: #{File.basename($0)} #{command} IMAGE"
       'debug_selected'
+    when 'help'
+      'help'
     end
   end
 
