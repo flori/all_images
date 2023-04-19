@@ -1,14 +1,14 @@
 # -*- encoding: utf-8 -*-
-# stub: all_images 0.2.1 ruby lib
+# stub: all_images 0.2.2 ruby lib
 
 Gem::Specification.new do |s|
   s.name = "all_images".freeze
-  s.version = "0.2.1"
+  s.version = "0.2.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0".freeze) if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib".freeze]
   s.authors = ["Florian Frank".freeze]
-  s.date = "2022-11-17"
+  s.date = "2023-04-19"
   s.description = "A script that runs a script in all of the configured docker images".freeze
   s.email = "flori@ping.de".freeze
   s.executables = ["all_images".freeze]
@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.homepage = "http://github.com/flori/all_images".freeze
   s.licenses = ["MIT".freeze]
   s.rdoc_options = ["--title".freeze, "AllImages -- Runs a script in all of the docker images".freeze, "--main".freeze, "README.md".freeze]
-  s.rubygems_version = "3.3.17".freeze
+  s.rubygems_version = "3.3.26".freeze
   s.summary = "Runs a script in all of the docker images".freeze
   s.test_files = ["spec/spec_helper.rb".freeze]
 
