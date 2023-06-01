@@ -15,4 +15,3 @@ images:
   ruby:3.0-alpine: *script
   ruby:2.7-alpine: *script
   ruby:2.6-alpine: *script
-  ruby:2.5-alpine: *script
