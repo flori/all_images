@@ -1,14 +1,14 @@
 # -*- encoding: utf-8 -*-
-# stub: all_images 0.2.2 ruby lib
+# stub: all_images 0.2.3 ruby lib
 
 Gem::Specification.new do |s|
   s.name = "all_images".freeze
-  s.version = "0.2.2"
+  s.version = "0.2.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0".freeze) if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib".freeze]
   s.authors = ["Florian Frank".freeze]
-  s.date = "2023-04-19"
+  s.date = "2023-06-01"
   s.description = "A script that runs a script in all of the configured docker images".freeze
   s.email = "flori@ping.de".freeze
   s.executables = ["all_images".freeze]
