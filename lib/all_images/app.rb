@@ -9,29 +9,34 @@ class AllImages::App
   alias sh system
 
   def initialize(args)
-    @args = args.dup
-    @command = pick_command
+    @args     = args.dup
+    @command  = pick_command
+    @commands = %w[ ls help run debug run_all ].sort
   end
 
   def run
-    result     = 0
-    @config    = load_config or return 23
+    @config   = load_config or return 23
 
+    result = 0
     case @command
     when 'ls'
       puts Array(@config['images']).map(&:first)
     when 'help'
-      commands = %w[ ls help run debug run_all ].sort
-      puts "Usage: #{File.basename($0)} #{commands * ?|} IMAGE"
+      puts "Usage: #{File.basename($0)} #{@commands * ?|} IMAGE"
     else
       Array(@config['images']).each do |image, script|
         case @command
         when 'run_all'
-          run_image(image, script)
+          result |= run_image(image, script)
         when 'run_selected'
-          image == @selected and run_image(image, script)
+          image == @selected and result |= run_image(image, script)
         when 'debug_selected'
-          image == @selected and run_image(image, script, interactive: true)
+          image == @selected and result |= run_image(image, script, interactive: true)
+        end
+        if @config['fail_fast']
+          return 1
+        else
+          result |= 1
         end
       end
     end
@@ -46,13 +51,10 @@ class AllImages::App
     it = interactive ? ' -it ' : ' '
     if sh "docker run --name all_images#{it}-v `pwd`:/work '#{tag}' sh -c '#{script}'"
       puts green('SUCCESS')
+      return 0
     else
       puts red('FAILURE')
-      if @config['fail_fast']
-        return 1
-      else
-        result |= 1
-      end
+      return 1
     end
   ensure
     sh 'docker rm -f all_images >/dev/null'
@@ -70,7 +72,7 @@ class AllImages::App
     when 'debug'
       @selected = @args.shift or fail "Usage: #{File.basename($0)} #{command} IMAGE"
       'debug_selected'
-    when 'help'
+    else
       'help'
     end
   end
