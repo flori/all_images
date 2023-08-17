@@ -33,10 +33,9 @@ class AllImages::App
         when 'debug_selected'
           image == @selected and result |= run_image(image, script, interactive: true)
         end
-        if @config['fail_fast']
+        result |= 1
+        if @config['fail_fast'] && result
           return 1
-        else
-          result |= 1
         end
       end
     end
