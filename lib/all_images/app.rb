@@ -45,14 +45,19 @@ class AllImages::App
 
   def run_image(image, script, interactive: false)
     dockerfile = @config.fetch('dockerfile').to_s
-    tag = provide_image image, dockerfile
-    it = interactive ? ' -it ' : ' '
-    if sh "docker run --name all_images#{it}-v `pwd`:/work '#{tag}' sh -c '#{script}'"
-      puts green('SUCCESS')
+    tag = provide_image image, dockerfile, script
+    if interactive
+      puts "You can run /script interactively now."
+      sh "docker run --name all_images -it -v `pwd`:/work '#{tag}' sh"
       return 0
     else
-      puts red('FAILURE')
-      return 1
+      if sh "docker run --name all_images -v `pwd`:/work '#{tag}' sh -c /script"
+        puts green('SUCCESS')
+        return 0
+      else
+        puts red('FAILURE')
+        return 1
+      end
     end
   ensure
     sh 'docker rm -f all_images >/dev/null'
@@ -91,20 +96,25 @@ class AllImages::App
     AllImages::Config.load(config_filename)
   end
 
-  def provide_image(image, dockerfile)
+  def provide_image(image, dockerfile, script)
     prefix = @config.fetch('prefix', File.basename(Dir.pwd))
     tag    = "#{prefix}/all_images/#{image}"
     sh "docker pull '#{image}'"
     build_dir = File.join(Dir.tmpdir, 'build')
     mkdir_p build_dir
     cd build_dir do
-      File.open('Dockerfile', 'w') do |t|
+      File.open('script', ?w) do |s|
+        s.print script
+      end
+      File.open('Dockerfile', ?w) do |t|
         t.puts <<~end
         FROM #{image}
 
         WORKDIR /work
 
         #{dockerfile}
+
+        COPY --chmod=755 script /script
       end
       end
       sh "docker build --pull -t '#{tag}' ."
