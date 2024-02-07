@@ -46,12 +46,13 @@ class AllImages::App
   def run_image(image, script, interactive: false)
     dockerfile = @config.fetch('dockerfile').to_s
     tag = provide_image image, dockerfile, script
+    term = ENV.key?('TERM') ? %{ -e TERM=#{ENV['TERM'].inspect} } : ' '
     if interactive
       puts "You can run /script interactively now."
-      sh "docker run --name all_images -it -v `pwd`:/work '#{tag}' sh"
+      sh "docker run --name all_images -it #{term}-v `pwd`:/work '#{tag}' sh"
       return 0
     else
-      if sh "docker run --name all_images -v `pwd`:/work '#{tag}' sh -c /script"
+      if sh "docker run --name all_images -it #{term}-v `pwd`:/work '#{tag}' sh -c /script"
         puts green('SUCCESS')
         return 0
       else
