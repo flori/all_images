@@ -6,7 +6,7 @@ GemHadar do
   name        'all_images'
   author      'Florian Frank'
   email       'flori@ping.de'
-  homepage    "http://github.com/flori/#{name}"
+  homepage    "https://github.com/flori/#{name}"
   summary     'Runs a script in all of the docker images'
   description 'A script that runs a script in all of the configured docker images'
   test_dir    'spec'
