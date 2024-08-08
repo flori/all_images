@@ -19,11 +19,10 @@ module AllImages::Config
       rake test
 
     images:
+      ruby:3.3-alpine: *script
       ruby:3.2-alpine: *script
       ruby:3.1-alpine: *script
       ruby:3.0-alpine: *script
-      ruby:2.7-alpine: *script
-      ruby:2.6-alpine: *script
   end
 
   def init(filename)
