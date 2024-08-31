@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.email = "flori@ping.de".freeze
   s.executables = ["all_images".freeze]
   s.extra_rdoc_files = ["README.md".freeze, "lib/all_images.rb".freeze, "lib/all_images/app.rb".freeze, "lib/all_images/config.rb".freeze, "lib/all_images/version.rb".freeze]
-  s.files = [".utilsrc".freeze, "Gemfile".freeze, "LICENSE".freeze, "README.md".freeze, "Rakefile".freeze, "all_images.gemspec".freeze, "bin/all_images".freeze, "lib/all_images.rb".freeze, "lib/all_images/app.rb".freeze, "lib/all_images/config.rb".freeze, "lib/all_images/version.rb".freeze, "spec/app_spec.rb".freeze, "spec/spec_helper.rb".freeze]
+  s.files = [".utilsrc".freeze, "CHANGES.md".freeze, "Gemfile".freeze, "LICENSE".freeze, "README.md".freeze, "Rakefile".freeze, "all_images.gemspec".freeze, "bin/all_images".freeze, "lib/all_images.rb".freeze, "lib/all_images/app.rb".freeze, "lib/all_images/config.rb".freeze, "lib/all_images/version.rb".freeze, "spec/app_spec.rb".freeze, "spec/spec_helper.rb".freeze]
   s.homepage = "https://github.com/flori/all_images".freeze
   s.licenses = ["MIT".freeze]
   s.rdoc_options = ["--title".freeze, "AllImages -- Runs a script in all of the docker images".freeze, "--main".freeze, "README.md".freeze]
