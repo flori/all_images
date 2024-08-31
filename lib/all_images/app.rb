@@ -1,6 +1,7 @@
 require 'term/ansicolor'
 require 'tmpdir'
 require 'fileutils'
+require 'tins'
 
 class AllImages::App
   include Term::ANSIColor
@@ -12,6 +13,7 @@ class AllImages::App
     @args     = args.dup
     @command  = pick_command
     @commands = %w[ ls help run debug run_all ].sort
+    @suffix   = Tins::Token.new(alphabet: Tins::Token::BASE32_ALPHABET, bits: 32)
   end
 
   def run
@@ -43,16 +45,20 @@ class AllImages::App
 
   private
 
+  def name
+    [ 'all_images', @suffix ] * ?-
+  end
+
   def run_image(image, script, interactive: false)
     dockerfile = @config.fetch('dockerfile').to_s
     tag = provide_image image, dockerfile, script
     term = ENV.key?('TERM') ? %{ -e TERM=#{ENV['TERM'].inspect} } : ' '
     if interactive
       puts "You can run /script interactively now."
-      sh "docker run --name all_images -it #{term}-v `pwd`:/work '#{tag}' sh"
+      sh "docker run --name #{name} -it #{term}-v `pwd`:/work '#{tag}' sh"
       return 0
     else
-      if sh "docker run --name all_images -it #{term}-v `pwd`:/work '#{tag}' sh -c /script"
+      if sh "docker run --name #{name} -it #{term}-v `pwd`:/work '#{tag}' sh -c /script"
         puts green('SUCCESS')
         return 0
       else
@@ -61,7 +67,7 @@ class AllImages::App
       end
     end
   ensure
-    sh 'docker rm -f all_images >/dev/null'
+    sh "docker rm -f #{name} >/dev/null"
   end
 
   def pick_command

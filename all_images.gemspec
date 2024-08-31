@@ -1,14 +1,14 @@
 # -*- encoding: utf-8 -*-
-# stub: all_images 0.4.1 ruby lib
+# stub: all_images 0.5.0 ruby lib
 
 Gem::Specification.new do |s|
   s.name = "all_images".freeze
-  s.version = "0.4.1".freeze
+  s.version = "0.5.0".freeze
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0".freeze) if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib".freeze]
   s.authors = ["Florian Frank".freeze]
-  s.date = "2024-08-08"
+  s.date = "2024-08-31"
   s.description = "A script that runs a script in all of the configured docker images".freeze
   s.email = "flori@ping.de".freeze
   s.executables = ["all_images".freeze]
@@ -23,7 +23,7 @@ Gem::Specification.new do |s|
 
   s.specification_version = 4
 
-  s.add_development_dependency(%q<gem_hadar>.freeze, ["~> 1.16.1".freeze])
+  s.add_development_dependency(%q<gem_hadar>.freeze, ["~> 1.17.0".freeze])
   s.add_development_dependency(%q<rake>.freeze, [">= 0".freeze])
   s.add_development_dependency(%q<simplecov>.freeze, [">= 0".freeze])
   s.add_development_dependency(%q<rspec>.freeze, [">= 0".freeze])
