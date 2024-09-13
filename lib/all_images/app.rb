@@ -2,12 +2,11 @@ require 'term/ansicolor'
 require 'tmpdir'
 require 'fileutils'
 require 'tins'
+require 'shellwords'
 
 class AllImages::App
   include Term::ANSIColor
   include FileUtils
-
-  alias sh system
 
   def initialize(args)
     @args     = args.dup
@@ -44,6 +43,15 @@ class AllImages::App
   end
 
   private
+
+  def sh(*a)
+    system(*a)
+    if $?.success?
+      true
+    else
+      raise "Command #{Shellwords.join(a).inspect} failed with: #{$?.exitstatus}"
+    end
+  end
 
   def name
     [ 'all_images', @suffix ] * ?-
