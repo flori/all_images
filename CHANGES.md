@@ -3,7 +3,7 @@
 ## 2024-09-01 v0.5.0
 
 * **Update image processing for parallel execution**:
-	+ Added random suffix to image names to prevent conflicts between concurrent processes.
+  + Added random suffix to image names to prevent conflicts between concurrent processes.
 * Added `CHANGES.md` file
 
 ## 2024-08-08 v0.4.1
@@ -31,20 +31,20 @@
 ## 2023-06-01 v0.2.3
 
 * **New Features**
-	+ Added support for Ruby 3.2
+  + Added support for Ruby 3.2
 * **Changes**
-	+ Bumped build version
-	+ Removed support for Ruby 2.5
+  + Bumped build version
+  + Removed support for Ruby 2.5
 * **Bug Fixes**
-	+ Repaired `fail_fast` mode
+  + Repaired `fail_fast` mode
 
 ## 2023-04-19 v0.2.2
 
 * **New Version Features**
-	+ Progress into the future of ruby development
-	+ Progress into the future
+  + Progress into the future of ruby development
+  + Progress into the future
 * **Significant Changes**
-	+ Removed development dependency (again)
+  + Removed development dependency (again)
 
 ## 2022-11-17 v0.2.1
 
@@ -53,8 +53,8 @@
 ## 2022-11-17 v0.2.0
 
 * **New Features**
-	+ Added commands to run and debug single images
-	+ Added a debug debugger feature
+  + Added commands to run and debug single images
+  + Added a debug debugger feature
 
 ## 2022-11-17 v0.1.0
 
