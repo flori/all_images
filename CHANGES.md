@@ -1,5 +1,24 @@
 # Changes
 
+## 2024-10-14 v0.6.0
+
+### Significant Changes
+* **Add support for environment variables to all_images**
+  + Require `'tins/xt/full'` and add new method `env` to set environment variables.
+  + Modified the `sh` method to use environment variables from the `env` method.
+  + Modified the `run_image` method to include environment variables in the Docker command.
+* Update rake task to use spec instead of test
+* Added `[IMAGE]` as an optional argument in the Usage message.
+
+### Other Changes
+* Reformat CHANGES.md
+* Add error reporting to `sh`
+  + Added require `'shellwords'`
+
+#### Environment Variables
+* Added `env` section to `.all_images.yml`
+* Defined `FOO=bar` and `USER` environment variables
+
 ## 2024-09-01 v0.5.0
 
 * **Update image processing for parallel execution**:
