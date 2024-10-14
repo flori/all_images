@@ -23,7 +23,7 @@ class AllImages::App
     when 'ls'
       puts Array(@config['images']).map(&:first)
     when 'help'
-      puts "Usage: #{File.basename($0)} #{@commands * ?|} IMAGE"
+      puts "Usage: #{File.basename($0)} #{@commands * ?|} [IMAGE]"
     else
       Array(@config['images']).each do |image, script|
         case @command
