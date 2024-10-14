@@ -8,7 +8,7 @@ script: &script |-
   ruby -v
   bundle
   echo -e "\e[0m"
-  rake test
+  rake spec
 
 fail_fast: true
 
