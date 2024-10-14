@@ -2,6 +2,7 @@ require 'term/ansicolor'
 require 'tmpdir'
 require 'fileutils'
 require 'tins'
+require 'tins/xt/full'
 require 'shellwords'
 
 class AllImages::App
@@ -17,7 +18,6 @@ class AllImages::App
 
   def run
     @config   = load_config or return 23
-
     result = 0
     case @command
     when 'ls'
@@ -44,7 +44,23 @@ class AllImages::App
 
   private
 
+  def env
+    vars = @config.fetch('env', [])
+    vars << 'TERM' if ENV.key?('TERM')
+    vars.each_with_object({}) { |v, h|
+      name, value = v.split(?=, 2)
+      if value
+        h[name] = value
+      else
+        h[name] = ENV[name]
+      end
+    }
+  end
+
   def sh(*a)
+    if $DEBUG
+      STDERR.puts "Executing #{a.inspect}."
+    end
     system(*a)
     if $?.success?
       true
@@ -59,14 +75,14 @@ class AllImages::App
 
   def run_image(image, script, interactive: false)
     dockerfile = @config.fetch('dockerfile').to_s
-    tag = provide_image image, dockerfile, script
-    term = ENV.key?('TERM') ? %{ -e TERM=#{ENV['TERM'].inspect} } : ' '
+    tag  = provide_image image, dockerfile, script
+    envs = env.full? { |e| +' ' << e.map { |n, v| '-e %s=%s' % [ n, v.inspect ] } * ' ' }
     if interactive
       puts "You can run /script interactively now."
-      sh "docker run --name #{name} -it #{term}-v `pwd`:/work '#{tag}' sh"
+      sh "docker run --name #{name} -it#{envs} -v `pwd`:/work '#{tag}' sh"
       return 0
     else
-      if sh "docker run --name #{name} -it #{term}-v `pwd`:/work '#{tag}' sh -c /script"
+      if sh "docker run --name #{name} -it#{envs} -v `pwd`:/work '#{tag}' sh -c /script"
         puts green('SUCCESS')
         return 0
       else
