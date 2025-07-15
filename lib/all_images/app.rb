@@ -44,6 +44,10 @@ class AllImages::App
 
   private
 
+  def info_puts(text)
+    puts white { on_color(28) { text } }
+  end
+
   def env
     vars = @config.fetch('env', [])
     vars << 'TERM' if ENV.key?('TERM')
@@ -75,17 +79,20 @@ class AllImages::App
 
   def run_image(image, script, interactive: false)
     dockerfile = @config.fetch('dockerfile').to_s
-    tag  = provide_image image, dockerfile, script
-    envs = env.full? { |e| +' ' << e.map { |n, v| '-e %s=%s' % [ n, v.inspect ] } * ' ' }
+    tag        = provide_image image, dockerfile, script
+    envs       = env.full? { |e| +' ' << e.map { |n, v| '-e %s=%s' % [ n, v.inspect ] } * ' ' }
     if interactive
       puts "You can run /script interactively now."
       sh "docker run --name #{name} -it#{envs} -v `pwd`:/work '#{tag}' sh"
       return 0
     else
+      info_puts "Running container #{name.inspect} for image tagged #{tag.inspect}."
       if sh "docker run --name #{name} -it#{envs} -v `pwd`:/work '#{tag}' sh -c /script"
+        info_puts "Image tagged #{tag.inspect} was run with result:"
         puts green('SUCCESS')
         return 0
       else
+        info_puts "Image tagged #{tag.inspect} was run with result:"
         puts red('FAILURE')
         return 1
       end
@@ -148,6 +155,7 @@ class AllImages::App
         COPY --chmod=755 script /script
       end
       end
+      info_puts "Now building image #{tag.inspect}…"
       sh "docker build --pull -t '#{tag}' ."
     end
     tag
