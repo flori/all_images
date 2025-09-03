@@ -1,5 +1,18 @@
 # Changes
 
+## 2025-09-03 v0.7.0
+
+- **Interactive Image Selection**: Integrated `SearchUI` for enhanced user
+  experience when selecting Docker images
+- **Improved Configuration Handling**: Better error handling and fallback
+  mechanisms for configuration loading
+- Removed support for Ruby **3.0** and **3.1**
+- Added support for Ruby **3.4** with `ruby:3.4-alpine` image configuration
+- Simplified SimpleCov setup using `GemHadar::SimpleCov.start`
+- Removed obsolete `binary` option from utils config
+- Added comprehensive documentation across the library
+- Improved logging with `info_puts` method for colored console output
+
 ## 2024-10-14 v0.6.0
 
 ### Significant Changes
