@@ -1,6 +1,7 @@
 .*.sw[pon]
 .AppleDouble
 .DS_Store
+.yardoc
 Gemfile.lock
 coverage
 pkg

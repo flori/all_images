@@ -11,7 +11,7 @@ GemHadar do
   description 'A script that runs a script in all of the configured docker images'
   test_dir    'spec'
   ignore      '.*.sw[pon]', 'pkg', 'Gemfile.lock', 'coverage',
-    '.AppleDouble', 'tags', '.DS_Store'
+    '.AppleDouble', 'tags', '.DS_Store', '.yardoc'
   readme      'README.md'
   title       "#{name.camelize} -- #{summary}"
   package_ignore '.all_images.yml', '.gitignore', 'VERSION'
