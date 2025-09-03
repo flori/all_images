@@ -7,9 +7,8 @@ module AllImages::Config
 
   EXAMPLE = <<~end
     dockerfile: |-
-      RUN apk add --no-cache build-base git
-      RUN gem update --system
-      RUN gem install gem_hadar bundler
+      RUN apk add --no-cache build-base yaml-dev git
+      RUN gem install gem_hadar
 
     script: &script |-
       echo -e "\\e[1m"
