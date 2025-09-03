@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0".freeze) if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib".freeze]
   s.authors = ["Florian Frank".freeze]
-  s.date = "2024-10-14"
+  s.date = "1980-01-02"
   s.description = "A script that runs a script in all of the configured docker images".freeze
   s.email = "flori@ping.de".freeze
   s.executables = ["all_images".freeze]
@@ -17,13 +17,13 @@ Gem::Specification.new do |s|
   s.homepage = "https://github.com/flori/all_images".freeze
   s.licenses = ["MIT".freeze]
   s.rdoc_options = ["--title".freeze, "AllImages -- Runs a script in all of the docker images".freeze, "--main".freeze, "README.md".freeze]
-  s.rubygems_version = "3.5.18".freeze
+  s.rubygems_version = "3.6.9".freeze
   s.summary = "Runs a script in all of the docker images".freeze
   s.test_files = ["spec/app_spec.rb".freeze, "spec/spec_helper.rb".freeze]
 
   s.specification_version = 4
 
-  s.add_development_dependency(%q<gem_hadar>.freeze, ["~> 1.19".freeze])
+  s.add_development_dependency(%q<gem_hadar>.freeze, ["~> 2.2".freeze])
   s.add_development_dependency(%q<rake>.freeze, [">= 0".freeze])
   s.add_development_dependency(%q<simplecov>.freeze, [">= 0".freeze])
   s.add_development_dependency(%q<rspec>.freeze, [">= 0".freeze])
