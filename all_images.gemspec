@@ -28,6 +28,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency(%q<simplecov>.freeze, [">= 0".freeze])
   s.add_development_dependency(%q<rspec>.freeze, [">= 0".freeze])
   s.add_development_dependency(%q<debug>.freeze, [">= 0".freeze])
-  s.add_runtime_dependency(%q<tins>.freeze, ["~> 1.0".freeze])
-  s.add_runtime_dependency(%q<term-ansicolor>.freeze, [">= 0".freeze])
+  s.add_runtime_dependency(%q<tins>.freeze, ["~> 1.42".freeze])
+  s.add_runtime_dependency(%q<search_ui>.freeze, ["~> 0.0".freeze])
+  s.add_runtime_dependency(%q<term-ansicolor>.freeze, ["~> 1.11".freeze])
 end

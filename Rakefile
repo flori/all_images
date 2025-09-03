@@ -10,18 +10,19 @@ GemHadar do
   summary     'Runs a script in all of the docker images'
   description 'A script that runs a script in all of the configured docker images'
   test_dir    'spec'
-  ignore      '.*.sw[pon]', 'pkg', 'Gemfile.lock', 'coverage',
-    '.AppleDouble', 'tags', '.DS_Store', '.yardoc'
   readme      'README.md'
   title       "#{name.camelize} -- #{summary}"
+  licenses << 'MIT'
+  executables << 'all_images'
+  ignore      '.*.sw[pon]', 'pkg', 'Gemfile.lock', 'coverage',
+    '.AppleDouble', 'tags', '.DS_Store', '.yardoc'
   package_ignore '.all_images.yml', '.gitignore', 'VERSION'
 
-  dependency  'tins', '~>1.0'
-  dependency  'term-ansicolor'
+  dependency  'tins',           '~> 1.42'
+  dependency  'search_ui',      '~> 0.0'
+  dependency  'term-ansicolor', '~> 1.11'
   development_dependency 'rake'
   development_dependency 'simplecov'
   development_dependency 'rspec'
   development_dependency 'debug'
-  licenses << 'MIT'
-  executables << 'all_images'
 end
