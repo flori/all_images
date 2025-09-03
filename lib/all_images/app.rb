@@ -4,6 +4,7 @@ require 'fileutils'
 require 'tins'
 require 'tins/xt/full'
 require 'shellwords'
+require 'search_ui'
 
 # AllImages::App is the core application class that orchestrates Docker image
 # execution workflows
@@ -20,6 +21,7 @@ require 'shellwords'
 class AllImages::App
   include Term::ANSIColor
   include FileUtils
+  include SearchUI
 
   # Initializes a new instance of the AllImages application
   #
@@ -31,21 +33,31 @@ class AllImages::App
   # application
   def initialize(args)
     @args     = args.dup
+    @config   = load_config or return 23
     @command  = pick_command
     @commands = %w[ ls help run debug run_all ].sort
     @suffix   = Tins::Token.new(alphabet: Tins::Token::BASE32_ALPHABET, bits: 32)
   end
 
+  # Executes the configured command across Docker images
+  #
+  # Processes the specified command and runs it against the configured Docker
+  # images. Depending on the command, this method may list available images,
+  # display help information, or execute scripts in containers. It handles both
+  # individual image execution and batch processing of all configured images.
+  #
+  # @return [ Integer ] the cumulative result code from executing commands
+  # across images, where 0 indicates success and non-zero values indicate
+  # failures
   def run
-    @config   = load_config or return 23
-    result = 0
+    result  = 0
     case @command
     when 'ls'
-      puts Array(@config['images']).map(&:first)
+      puts images.map(&:first)
     when 'help'
       puts "Usage: #{File.basename($0)} #{@commands * ?|} [IMAGE]"
     else
-      Array(@config['images']).each do |image, script|
+      images.each do |image, script|
         case @command
         when 'run_all'
           result |= run_image(image, script)
@@ -63,6 +75,18 @@ class AllImages::App
   end
 
   private
+
+  # Returns an array of configured Docker images for execution
+  #
+  # This method retrieves the list of Docker images from the application's
+  # configuration and ensures it is returned as an Array instance, even if the
+  # configuration contains a single image value rather than an array.
+  #
+  # @return [ Array<String> ] an array containing the names of Docker images
+  #                           to be processed by the application
+  def images
+     Array(@config['images'])
+  end
 
   # Prints the given text using green colored output
   #
@@ -164,6 +188,34 @@ class AllImages::App
     sh "docker rm -f #{name} >/dev/null"
   end
 
+  # Presents a searchable interface for selecting a configured Docker image
+  #
+  # This method initializes and starts a search UI that allows users to
+  # interactively pick a Docker image from the list of configured images. It
+  # provides filtering capabilities based on user input and displays the
+  # options with visual highlighting for the selected item.
+  #
+  # @return [ String ] the name of the selected Docker image
+  def pick_configured_image
+    Search.new(
+      prompt: 'Pick a configured container image: ',
+      match: -> answer {
+        matches = images.map(&:first).grep(/#{Regexp.quote(answer)}/)
+        matches.empty? and matches = images
+        matches.first(Tins::Terminal.lines - 1)
+      },
+      query: -> _answer, matches, selector {
+        matches.each_with_index.map { |m, i|
+          i == selector ? "#{blue{?⮕}} #{on_blue{bold{m}}}" : "  #{m.to_s}"
+        } * ?\n
+      },
+      found: -> _answer, matches, selector {
+        matches[selector]
+      },
+      output: STDOUT
+    ).start
+  end
+
   # Determines the command to execute based on the provided arguments
   #
   # Processes the command-line arguments to identify the intended operation,
@@ -178,10 +230,12 @@ class AllImages::App
     when 'ls'
       'ls'
     when 'run'
-      @selected = @args.shift or fail "Usage: #{File.basename($0)} #{command} IMAGE"
+      @selected = @args.shift || pick_configured_image
+      @selected or fail "Usage: #{File.basename($0)} #{command} IMAGE"
       'run_selected'
     when 'debug'
-      @selected = @args.shift or fail "Usage: #{File.basename($0)} #{command} IMAGE"
+      @selected = @args.shift || pick_configured_image
+      @selected or fail "Usage: #{File.basename($0)} #{command} IMAGE"
       'debug_selected'
     else
       'help'
@@ -199,16 +253,12 @@ class AllImages::App
   #   initialization occurred and the method should terminate early
   def load_config
     config_filename = '.all_images.yml'
-    if @args.empty?
-      unless File.exist?(config_filename)
-        AllImages::Config.init(config_filename)
-        puts bold("Config file #{config_filename} not found!\n\n")  +
-          "The following example was created, adapt to your own needs:\n\n",
-          AllImages::Config.example, ""
-        return
-      end
-    else
-      config_filename = @args.shift
+    unless File.exist?(config_filename)
+      AllImages::Config.init(config_filename)
+      puts bold("Config file #{config_filename} not found!\n\n")  +
+        "The following example was created, adapt to your own needs:\n\n",
+        AllImages::Config.example, ""
+      return
     end
     AllImages::Config.load(config_filename)
   end
