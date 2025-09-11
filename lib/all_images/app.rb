@@ -200,8 +200,9 @@ class AllImages::App
     Search.new(
       prompt: 'Pick a configured container image: ',
       match: -> answer {
-        matches = images.map(&:first).grep(/#{Regexp.quote(answer)}/)
-        matches.empty? and matches = images
+        image_names = images.map(&:first)
+        matches = image_names.grep(/#{Regexp.quote(answer)}/)
+        matches.empty? and matches = image_names
         matches.first(Tins::Terminal.lines - 1)
       },
       query: -> _answer, matches, selector {
