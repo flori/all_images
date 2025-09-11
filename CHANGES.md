@@ -1,5 +1,15 @@
 # Changes
 
+## 2025-09-11 v0.8.0
+
+- Improved image matching logic by replacing direct
+  `images.map(&:first).grep(...)` with a separate `image_names` variable for
+  better search behavior
+- Updated `tins` dependency from version **1.42** to **1** in `Rakefile` and
+  `all_images.gemspec`
+- Updated `gem_hadar` development dependency from version **2.2** to **2.4** in
+  `Rakefile` and `all_images.gemspec`
+
 ## 2025-09-03 v0.7.0
 
 - **Interactive Image Selection**: Integrated `SearchUI` for enhanced user
