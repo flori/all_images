@@ -18,7 +18,7 @@ GemHadar do
     '.AppleDouble', 'tags', '.DS_Store', '.yardoc'
   package_ignore '.all_images.yml', '.gitignore', 'VERSION'
 
-  dependency  'tins',           '~> 1.42'
+  dependency  'tins',           '~> 1'
   dependency  'search_ui',      '~> 0.0'
   dependency  'term-ansicolor', '~> 1.11'
   development_dependency 'rake'
