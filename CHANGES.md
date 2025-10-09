@@ -1,5 +1,16 @@
 # Changes
 
+## 2025-10-09 v0.9.0
+
+- Bumped **gem_hadar** dependency from **2.4** to **2.7**
+- Added **yaml**, **fileutils**, and **shellwords** as runtime dependencies
+- Updated Dockerfile to include **openssl-dev** and use `gem update --system`
+- Replaced `bundle` with `bundle update` and `bundle install --jobs=$(getconf
+  _NPROCESSORS_ONLN)`
+- Added **ruby:3.1-alpine** to CI image matrix
+- Enabled `fail_fast: true` in CI configuration
+- Updated default config as well
+
 ## 2025-09-11 v0.8.0
 
 - Improved image matching logic by replacing direct
