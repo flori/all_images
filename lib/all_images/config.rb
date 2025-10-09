@@ -18,15 +18,19 @@ module AllImages::Config
   # Example configuration for `all_images`.
   EXAMPLE = <<~EOT
     dockerfile: |-
-      RUN apk add --no-cache build-base yaml-dev git
-      RUN gem install gem_hadar
+      RUN apk add --no-cache build-base yaml-dev openssl-dev git
+      RUN gem update --system
+      RUN gem install bundler gem_hadar
 
     script: &script |-
-      echo -e "\\e[1m"
+      echo -e "\e[1m"
       ruby -v
-      bundle
-      echo -e "\\e[0m"
-      rake test
+      echo -e "\e[0m"
+      bundle update
+      bundle install --jobs=$(getconf _NPROCESSORS_ONLN)
+      rake spec
+
+    fail_fast: true
 
     images:
       ruby:3.4-alpine: *script

@@ -23,7 +23,7 @@ Gem::Specification.new do |s|
 
   s.specification_version = 4
 
-  s.add_development_dependency(%q<gem_hadar>.freeze, ["~> 2.4".freeze])
+  s.add_development_dependency(%q<gem_hadar>.freeze, ["~> 2.7".freeze])
   s.add_development_dependency(%q<rake>.freeze, [">= 0".freeze])
   s.add_development_dependency(%q<simplecov>.freeze, [">= 0".freeze])
   s.add_development_dependency(%q<rspec>.freeze, [">= 0".freeze])
@@ -31,4 +31,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency(%q<tins>.freeze, ["~> 1".freeze])
   s.add_runtime_dependency(%q<search_ui>.freeze, ["~> 0.0".freeze])
   s.add_runtime_dependency(%q<term-ansicolor>.freeze, ["~> 1.11".freeze])
+  s.add_runtime_dependency(%q<yaml>.freeze, [">= 0".freeze])
+  s.add_runtime_dependency(%q<fileutils>.freeze, [">= 0".freeze])
+  s.add_runtime_dependency(%q<shellwords>.freeze, [">= 0".freeze])
 end
