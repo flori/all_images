@@ -1,5 +1,27 @@
 # Changes
 
+## 2025-12-21 v0.10.0
+
+- Updated `rubygems_version` from **3.6.9** to **4.0.2**
+- Updated `gem_hadar` development dependency from **~> 2.7** to **~> 2.12**
+- Enhanced README.md with comprehensive documentation including architecture
+  overview, component descriptions, usage examples, installation instructions,
+  configuration details, and advanced features
+- Added detailed command examples and configuration file structure
+  documentation
+- Enhanced security considerations and error handling sections
+- Accurately documented `run_all`, `run`, `debug`, `ls`, and `help` commands
+- Documented Docker integration, environment variable handling, and interactive debugging
+- Maintained proper documentation of YAML configuration format including
+  `dockerfile`, `script`, `fail_fast`, and `images` sections
+- Preserved accurate description of `SearchUI` integration for interactive
+  image selection
+- Changed `bundle update` command to `bundle update --all` for consistent
+  dependency updates
+- Added `ruby:4.0-rc-alpine` image configuration to CI pipeline
+- Maintains existing Ruby version support for **3.4**, **3.3**, and **3.2**
+- Improves CI coverage for upcoming Ruby **4.0** release candidate
+
 ## 2025-10-09 v0.9.0
 
 - Bumped **gem_hadar** dependency from **2.4** to **2.7**
