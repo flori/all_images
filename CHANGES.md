@@ -1,5 +1,15 @@
 # Changes
 
+## 2026-01-02 v0.11.0
+
+- Added `CHANGES.md` file to package by updating the `changelog` configuration
+  in the gemspec file
+- Updated `gem_hadar` dependency to version **2.16.3** or higher
+- Updated Ruby version in CI configuration from `ruby:4.0-rc-alpine` to
+  `ruby:4.0-alpine`
+- Added `ruby:4.0-alpine` entry to `lib/all_images/config.rb` for consistent
+  image definition configuration
+
 ## 2025-12-21 v0.10.0
 
 - Updated `rubygems_version` from **3.6.9** to **4.0.2**
