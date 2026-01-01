@@ -33,6 +33,7 @@ module AllImages::Config
     fail_fast: true
 
     images:
+      ruby:4.0-alpine: *script
       ruby:3.4-alpine: *script
       ruby:3.3-alpine: *script
       ruby:3.2-alpine: *script
