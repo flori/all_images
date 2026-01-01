@@ -18,6 +18,10 @@ GemHadar do
     '.AppleDouble', 'tags', '.DS_Store', '.yardoc'
   package_ignore '.all_images.yml', '.gitignore', 'VERSION'
 
+  changelog do
+    filename 'CHANGES.md'
+  end
+
   dependency  'tins',           '~> 1'
   dependency  'search_ui',      '~> 0.0'
   dependency  'term-ansicolor', '~> 1.11'
