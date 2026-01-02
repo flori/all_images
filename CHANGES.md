@@ -1,5 +1,13 @@
 # Changes
 
+## 2026-01-02 v0.11.1
+
+- Handle `nil` configuration gracefully when retrieving images to improve
+  robustness
+- Escape escape sequences in config script
+- Maintain backward compatibility while making the application more resilient
+  to configuration issues
+
 ## 2026-01-02 v0.11.0
 
 - Added `CHANGES.md` file to package by updating the `changelog` configuration
