@@ -23,9 +23,9 @@ module AllImages::Config
       RUN gem install bundler gem_hadar
 
     script: &script |-
-      echo -e "\e[1m"
+      echo -e "\\e[1m"
       ruby -v
-      echo -e "\e[0m"
+      echo -e "\\e[0m"
       bundle update --all
       bundle install --jobs=$(getconf _NPROCESSORS_ONLN)
       rake spec
