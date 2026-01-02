@@ -1,5 +1,10 @@
 # Changes
 
+## 2026-01-02 v0.11.2
+
+- Updated rake execution to use `bundle exec` for consistent dependency
+  management
+
 ## 2026-01-02 v0.11.1
 
 - Handle `nil` configuration gracefully when retrieving images to improve
