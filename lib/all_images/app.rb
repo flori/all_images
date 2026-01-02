@@ -85,7 +85,7 @@ class AllImages::App
   # @return [ Array<String> ] an array containing the names of Docker images
   #                           to be processed by the application
   def images
-     Array(@config['images'])
+    Array(@config&.[]('images'))
   end
 
   # Prints the given text using green colored output
