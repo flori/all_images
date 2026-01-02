@@ -28,7 +28,7 @@ module AllImages::Config
       echo -e "\\e[0m"
       bundle update --all
       bundle install --jobs=$(getconf _NPROCESSORS_ONLN)
-      rake spec
+      bundle exec rake spec
 
     fail_fast: true
 
