@@ -1,5 +1,18 @@
 # Changes
 
+## 2026-01-17 v0.12.0
+
+- Added new **before** and **after** configuration hooks in `.all_images.yml`
+  for pre/post execution functionality
+- Introduced `RESULT` environment variable to enable post-execution decision
+  making in hooks
+- Enhanced `sh` method with `crash: false` option to allow non-fatal hook execution
+- Updated `run_image` method to execute hooks and track test results
+- Updated README documentation for the new hook functionality
+- Updated `rubygems_version` from **4.0.2** to **4.0.3**
+- Updated `gem_hadar` development dependency from **>= 2.16.3** to **>=
+  2.17.0**
+
 ## 2026-01-02 v0.11.2
 
 - Updated rake execution to use `bundle exec` for consistent dependency
