@@ -215,6 +215,32 @@ all_images run
 # Shows searchable list of available images
 ```
 
+### Pre/Post Execution Hooks 🔄
+
+AllImages supports pre/post execution hooks in your configuration:
+
+```yaml
+before: |-
+  echo 🏁 Preparing…
+  echo Deleting Gemfile.lock
+  rm -f Gemfile.lock
+
+after: |-
+  if [[ "$RESULT" = "1" ]]
+  then
+    echo 😵 Some tests failed!
+  else
+    echo 🥳 All tests passed!
+  fi
+
+# ... rest of your configuration
+```
+
+- `before` hook runs before each image execution
+- `after` hook runs after each image execution with `RESULT` environment variable
+- `RESULT` indicates success (0) or failure (1) of the test script
+- Hooks are non-fatal (won't stop the workflow if they fail)
+
 ## Error Handling ⚠️
 
 AllImages provides comprehensive error handling for common scenarios:
