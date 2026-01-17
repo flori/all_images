@@ -116,27 +116,15 @@ class AllImages::App
     }
   end
 
-  # Executes a system command and handles its result
-  #
-  # This method runs a given system command with the provided arguments,
-  # optionally logging the execution when debug mode is enabled. It checks the
-  # command's exit status and raises an exception if the command fails,
-  # otherwise returning true to indicate success.
-  #
-  # @param a [ Array<String> ] the command and its arguments to be executed
-  #
-  # @return [ TrueClass ] when the command executes successfully
-  #
-  # @raise [ RuntimeError ] if the executed command exits with a non-zero status
-  def sh(*a)
+  def sh(script, crash: true)
     if $DEBUG
       STDERR.puts "Executing #{a.inspect}."
     end
-    system(*a)
+    system(script)
     if $?.success?
       true
-    else
-      raise "Command #{Shellwords.join(a).inspect} failed with: #{$?.exitstatus}"
+    elsif crash
+      raise "Command #{script.inspect} failed with: #{$?.exitstatus}"
     end
   end
 
@@ -165,25 +153,33 @@ class AllImages::App
   #
   # @return [ Integer ] exit code indicating success (0) or failure (1) of the script execution
   def run_image(image, script, interactive: false)
+    if before = @config['before']
+      sh before
+    end
     dockerfile = @config.fetch('dockerfile').to_s
     tag        = provide_image image, dockerfile, script
     envs       = env.full? { |e| +' ' << e.map { |n, v| '-e %s=%s' % [ n, v.inspect ] } * ' ' }
+    result     = 1
     if interactive
       puts "You can run /script interactively now."
-      sh "docker run --name #{name} -it#{envs} -v `pwd`:/work '#{tag}' sh"
-      return 0
+      sh "docker run --name #{name} -it#{envs} -v `pwd`:/work '#{tag}' sh", crash: true
+      result = nil
     else
       info_puts "Running container #{name.inspect} for image tagged #{tag.inspect}."
-      if sh "docker run --name #{name} -it#{envs} -v `pwd`:/work '#{tag}' sh -c /script"
+      if sh "docker run --name #{name} -it#{envs} -v `pwd`:/work '#{tag}' sh -c /script", crash: false
         info_puts "Image tagged #{tag.inspect} was run with result:"
         puts green('SUCCESS')
-        return 0
+        result = 0
       else
         info_puts "Image tagged #{tag.inspect} was run with result:"
         puts red('FAILURE')
-        return 1
       end
     end
+    if result and after = @config['after']
+      ENV['RESULT'] = result.to_s
+      sh after, crash: false
+    end
+    result.to_i
   ensure
     sh "docker rm -f #{name} >/dev/null"
   end
