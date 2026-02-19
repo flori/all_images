@@ -22,6 +22,8 @@ after: |-
   else
     echo 🥳 All tests passed!
   fi
+  echo Deleting Gemfile.lock
+  rm -f Gemfile.lock
 
 fail_fast: true
 
