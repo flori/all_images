@@ -27,6 +27,11 @@ after: |-
 
 fail_fast: true
 
+env:
+  - "TERM=xterm"
+  - "COLUMNS=80"
+  - "LINES=25"
+
 images:
   ruby:4.0-alpine: *script
   ruby:3.4-alpine: *script

@@ -105,8 +105,7 @@ class AllImages::App
   # @return [ Hash ] a hash mapping environment variable names to their values
   def env
     vars = @config.fetch('env', [])
-    vars << 'TERM' if ENV.key?('TERM')
-    vars.each_with_object({}) { |v, h|
+    env_hash = vars.each_with_object({}) { |v, h|
       name, value = v.split(?=, 2)
       if value
         h[name] = value
@@ -114,6 +113,11 @@ class AllImages::App
         h[name] = ENV[name]
       end
     }
+    if !env_hash.key?('TERM') && ENV['TERM']
+      env_hash['TERM'] = ENV['TERM']
+    end
+    env_hash['ALL_IMAGES'] = ?1
+    env_hash
   end
 
   def sh(script, crash: true)
