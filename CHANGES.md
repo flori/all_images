@@ -1,5 +1,18 @@
 # Changes
 
+## 2026-10-08 v0.13.0
+
+*   Fixed `#env` to stop mutating `@config`; `env_hash` is now built immutably,
+    `ALL_IMAGES` is set to `?1` unconditionally, and the host `TERM` is used
+    only as a fallback when absent.
+*   Added an `env:` section to `.all_images.yml` pinning `TERM=xterm`,
+    `COLUMNS=80`, and `LINES=25`.
+*   Added specs in `spec/app_spec.rb` to assert `COLUMNS`, `LINES`, and `TERM`
+    inside the container, guarded by `skip 'not in all images'`.
+*   Updated `all_images.gemspec` to set `rubygems_version` to **4.0.22** and
+    require `gem_hadar` >= **2.18.0**.
+*   Added steps to `.all_images.yml` to remove `Gemfile.lock` during CI.
+
 ## 2026-01-17 v0.12.0
 
 - Added new **before** and **after** configuration hooks in `.all_images.yml`
