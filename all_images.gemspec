@@ -17,13 +17,13 @@ Gem::Specification.new do |s|
   s.homepage = "https://github.com/flori/all_images".freeze
   s.licenses = ["MIT".freeze]
   s.rdoc_options = ["--title".freeze, "AllImages -- Runs a script in all of the docker images".freeze, "--main".freeze, "README.md".freeze]
-  s.rubygems_version = "4.0.22".freeze
+  s.rubygems_version = "4.0.24".freeze
   s.summary = "Runs a script in all of the docker images".freeze
   s.test_files = ["spec/app_spec.rb".freeze, "spec/spec_helper.rb".freeze]
 
   s.specification_version = 4
 
-  s.add_development_dependency(%q<gem_hadar>.freeze, [">= 2.18.0".freeze])
+  s.add_development_dependency(%q<gem_hadar>.freeze, [">= 2.24.1".freeze])
   s.add_development_dependency(%q<rake>.freeze, [">= 0".freeze])
   s.add_development_dependency(%q<simplecov>.freeze, [">= 0".freeze])
   s.add_development_dependency(%q<rspec>.freeze, [">= 0".freeze])
